@@ -49,7 +49,7 @@ function NewsTab() {
     useEffect(() => {
         const load = async () => {
             try {
-                const { data } = await axios.get('http://localhost:3000/api/news/global');
+                const { data } = await axios.get(`${import.meta.env.VITE_API_URL || "http://localhost:3000"}/api/news/global`);
                 setNews(data);
             } catch { } finally { setLoading(false); }
         };
@@ -65,7 +65,7 @@ function NewsTab() {
         <div className="ls-list">
             {news.map((item, i) => (
                 <a key={i} href={item.link} target="_blank" rel="noreferrer"
-                    className={`ls-card ls-card--news ${item.breaking_indicator ? 'ls-card--breaking' : ''}`}>
+                    className={`ls-card ls-card--news ${item.breaking_indicator ? `ls-card--breaking' : ''}`}>
                     {item.breaking_indicator && <span className="ls-badge ls-badge--red">Breaking</span>}
                     <p className="ls-card__headline">{item.headline}</p>
                     <span className="ls-card__meta">
@@ -85,7 +85,7 @@ function MarketsTab() {
     useEffect(() => {
         const load = async () => {
             try {
-                const { data } = await axios.get('http://localhost:3000/api/market-moves');
+                const { data } = await axios.get(`${import.meta.env.VITE_API_URL || "http://localhost:3000"}/api/market-moves`);
                 setMovers(data);
             } catch { } finally { setLoading(false); }
         };
@@ -101,7 +101,7 @@ function MarketsTab() {
         <div className="ls-list">
             <div className="ls-row-header">
                 <span>Ticker</span>
-                <span style={{ textAlign: 'right' }}>Price</span>
+                <span style={{ textAlign: `right' }}>Price</span>
                 <span style={{ textAlign: 'right' }}>24h</span>
             </div>
             {movers.map((s, i) => {
@@ -133,13 +133,13 @@ function CryptoTab() {
         const load = async () => {
             try {
                 const [cRes, nRes] = await Promise.all([
-                    axios.get('http://localhost:3000/api/crypto'),
-                    axios.get('http://localhost:3000/api/crypto/news'),
+                    axios.get(`${import.meta.env.VITE_API_URL || "http://localhost:3000"}/api/crypto`),
+                    axios.get(`${import.meta.env.VITE_API_URL || "http://localhost:3000"}/api/crypto/news`),
                 ]);
                 setCoins(Array.isArray(cRes.data) ? cRes.data : []);
                 setCnews(Array.isArray(nRes.data) ? nRes.data : []);
             } catch (err) {
-                console.error('Crypto fetch error:', err.message);
+                console.error(`Crypto fetch error:', err.message);
             } finally { setLoading(false); }
         };
         load();
@@ -200,12 +200,12 @@ function PatternsTab() {
     const scan = useCallback(async () => {
         setLoading(true);
         try {
-            const newsRes = await axios.get('http://localhost:3000/api/news/global');
+            const newsRes = await axios.get(`${import.meta.env.VITE_API_URL || "http://localhost:3000"}/api/news/global`);
             const headlines = (newsRes.data || []).map(n => n.headline).filter(Boolean);
-            const patRes = await axios.post('http://localhost:3000/api/ai/patterns', { headlines });
+            const patRes = await axios.post(`${import.meta.env.VITE_API_URL || "http://localhost:3000"}/api/ai/patterns`, { headlines });
             setData(patRes.data);
         } catch (err) {
-            console.error('Pattern scan error:', err.message);
+            console.error(`Pattern scan error:', err.message);
         } finally { setLoading(false); }
     }, []);
 
@@ -297,11 +297,11 @@ function ChatTab() {
                 .filter((_, i) => i > 0) // skip initial welcome
                 .map(m => ({ role: m.role, content: m.content }));
 
-            const { data } = await axios.post('http://localhost:3000/api/ai/chat', {
+            const { data } = await axios.post(`${import.meta.env.VITE_API_URL || "http://localhost:3000"}/api/ai/chat`, {
                 messages: apiMessages,
             });
 
-            setMessages(prev => [...prev, { role: 'assistant', content: data.content }]);
+            setMessages(prev => [...prev, { role: `assistant', content: data.content }]);
         } catch (err) {
             setMessages(prev => [...prev, {
                 role: 'assistant',

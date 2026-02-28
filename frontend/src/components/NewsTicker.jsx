@@ -7,10 +7,10 @@ export default function NewsTicker() {
     useEffect(() => {
         const fetchNews = async () => {
             try {
-                const res = await axios.get('http://localhost:3000/api/news/global');
+                const res = await axios.get(`${import.meta.env.VITE_API_URL || "http://localhost:3000"}/api/news/global`);
                 setNews(res.data);
             } catch (err) {
-                console.error('NewsTicker fetch error:', err);
+                console.error(`NewsTicker fetch error:', err);
             }
         };
         fetchNews();

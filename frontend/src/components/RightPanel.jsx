@@ -64,7 +64,7 @@ export default function RightPanel() {
     useEffect(() => {
         const load = async () => {
             try {
-                const { data } = await axios.get('http://localhost:3000/api/exchanges');
+                const { data } = await axios.get(`${import.meta.env.VITE_API_URL || "http://localhost:3000"}/api/exchanges`);
                 setExchanges(data);
 
                 // Set sparklines from backend data
@@ -83,7 +83,7 @@ export default function RightPanel() {
                         const rc = RISK_COLORS[newRisk];
                         setAlerts(a => [...a.slice(-4), {
                             id: Date.now() + ex.id,
-                            text: `${ex.id} risk changed: ${RISK_COLORS[oldRisk]?.label || '?'} → ${rc.label}`,
+                            text: `${ex.id} risk changed: ${RISK_COLORS[oldRisk]?.label || `?'} → ${rc.label}`,
                             color: rc.text,
                             ts: Date.now(),
                         }]);

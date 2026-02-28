@@ -86,7 +86,7 @@ const NAME_TO_ISO2 = {
     'Tunisia': 'TN', 'Turkmenistan': 'TM', 'Uganda': 'UG',
     'Uruguay': 'UY', 'Uzbekistan': 'UZ', 'Venezuela': 'VE',
     'Yemen': 'YE', 'Zambia': 'ZM', 'Zimbabwe': 'ZW',
-    'Libya': 'LY', 'Myanmar': 'MM', 'Cambodia': 'KH',
+    'Libya': 'LY', 'Cambodia': 'KH',
     'Dominican Rep.': 'DO', 'Dominican Republic': 'DO',
     'Eq. Guinea': 'GQ', 'Equatorial Guinea': 'GQ',
     'Eritrea': 'ER', 'Gabon': 'GA', 'Gambia': 'GM',
@@ -245,8 +245,8 @@ export default function Globe({ onExchangeSelect, mapMode = '3d' }) {
             if (destroyed) return;
             try {
                 const [actRes, geoRes] = await Promise.all([
-                    axios.get('http://localhost:3000/api/country-activity'),
-                    axios.get('https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson'),
+                    axios.get(`${import.meta.env.VITE_API_URL || "http://localhost:3000"}/api/country-activity`),
+                    axios.get(`https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson'),
                 ]);
 
                 if (destroyed) return;
@@ -369,7 +369,7 @@ export default function Globe({ onExchangeSelect, mapMode = '3d' }) {
         };
 
         /* ── Fetch & plot exchanges ──────────────────────────────── */
-        axios.get('http://localhost:3000/api/exchanges').then(({ data }) => {
+        axios.get(`${import.meta.env.VITE_API_URL || "http://localhost:3000"}/api/exchanges`).then(({ data }) => {
             if (destroyed) return;
             data.forEach(ex => {
                 const hex = sentimentHex(ex.initial_sentiment);
@@ -380,12 +380,12 @@ export default function Globe({ onExchangeSelect, mapMode = '3d' }) {
         }).catch(console.error);
 
         /* ── Hot event pins ─────────────────────────────────────── */
-        axios.get('http://localhost:3000/api/events/hot').then(({ data }) => {
+        axios.get(`${import.meta.env.VITE_API_URL || "http://localhost:3000"}/api/events/hot`).then(({ data }) => {
             if (destroyed) return;
             data.forEach(ev => {
                 addGlowPoint({
                     position: Cesium.Cartesian3.fromDegrees(ev.longitude, ev.latitude, 100000),
-                    color: Cesium.Color.fromCssColorString('#facc15'),
+                    color: Cesium.Color.fromCssColorString(`#facc15'),
                     size: 9,
                     label: '🔥 ' + ev.title,
                 });

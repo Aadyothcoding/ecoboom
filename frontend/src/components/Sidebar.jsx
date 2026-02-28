@@ -75,12 +75,12 @@ function SidebarContent({ exchange, onClose }) {
             setChartData(sparkPoints);
             try {
                 const newsRes = await axios.get(
-                    `http://localhost:3000/api/news/${encodeURIComponent(exchange.country)}`
+                    `${import.meta.env.VITE_API_URL || "http://localhost:3000"}/api/news/${encodeURIComponent(exchange.country)}`
                 );
                 setNews(newsRes.data);
 
                 if (newsRes.data.length > 0) {
-                    const aiRes = await axios.post('http://localhost:3000/api/ai/sentiment', {
+                    const aiRes = await axios.post(`${import.meta.env.VITE_API_URL || "http://localhost:3000"}/api/ai/sentiment`, {
                         headline: newsRes.data[0].headline,
                         indexData: {
                             index: exchange.index_name,
@@ -91,7 +91,7 @@ function SidebarContent({ exchange, onClose }) {
                     setAi(aiRes.data);
                 }
             } catch (err) {
-                console.error('Sidebar load error:', err);
+                console.error(`Sidebar load error:', err);
             } finally {
                 setLoading(false);
             }

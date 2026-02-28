@@ -202,9 +202,9 @@ function PatternsTab() {
     const scan = useCallback(async () => {
         setLoading(true);
         try {
-            const newsRes = await axios.get(`${import.meta.env.VITE_API_URL || "http://localhost:3000"} / api / news / global`);
+            const newsRes = await axios.get(`${import.meta.env.VITE_API_URL || "http://localhost:3000"}/api/news/global`);
             const headlines = (newsRes.data || []).map(n => n.headline).filter(Boolean);
-            const patRes = await axios.post(`${import.meta.env.VITE_API_URL || "http://localhost:3000"} / api / ai / patterns`, { headlines });
+            const patRes = await axios.post(`${import.meta.env.VITE_API_URL || "http://localhost:3000"}/api/ai/patterns`, { headlines });
             setData(patRes.data);
         } catch (err) {
             console.error('Pattern scan error: ', err.message);

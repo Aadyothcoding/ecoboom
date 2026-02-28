@@ -394,7 +394,8 @@ app.post("/api/ai/chat", async (req, res) => {
         // Gather live context
         const exchangeData = exchanges.slice(0, 8).map(ex => ({
             id: ex.id, country: ex.country, index: ex.index_name,
-            ...getSimulatedIndex(),
+            index_value: (Math.random() * 10000 + 5000).toFixed(2),
+            percentage_change: parseFloat((Math.random() * 4 - 2).toFixed(2)),
             is_open: getMarketStatus(ex.timezone, ex.open_time, ex.close_time),
         }));
 

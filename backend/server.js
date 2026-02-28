@@ -454,6 +454,10 @@ RULES:
     }
 });
 
-app.listen(port, () => {
-    console.log(`\n🌍 Finance backend running on http://localhost:${port}\n`);
-});
+if (process.env.NODE_ENV !== "production") {
+    app.listen(port, () => {
+        console.log(`\n🌍 Finance backend running on http://localhost:${port}\n`);
+    });
+}
+
+module.exports = app;

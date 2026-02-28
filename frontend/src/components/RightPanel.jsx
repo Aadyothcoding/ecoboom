@@ -83,7 +83,7 @@ export default function RightPanel() {
                         const rc = RISK_COLORS[newRisk];
                         setAlerts(a => [...a.slice(-4), {
                             id: Date.now() + ex.id,
-                            text: `${ex.id} risk changed: ${RISK_COLORS[oldRisk]?.label || `?'} → ${rc.label}`,
+                            text: `${ex.id} risk changed: ${RISK_COLORS[oldRisk]?.label || '?'} → ${rc.label}`,
                             color: rc.text,
                             ts: Date.now(),
                         }]);

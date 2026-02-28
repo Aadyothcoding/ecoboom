@@ -65,7 +65,7 @@ function NewsTab() {
         <div className="ls-list">
             {news.map((item, i) => (
                 <a key={i} href={item.link} target="_blank" rel="noreferrer"
-                    className={`ls-card ls-card--news ${item.breaking_indicator ? `ls-card--breaking' : ''}`}>
+                    className={`ls-card ls-card--news ${item.breaking_indicator ? 'ls-card--breaking' : ''}`}>
                     {item.breaking_indicator && <span className="ls-badge ls-badge--red">Breaking</span>}
                     <p className="ls-card__headline">{item.headline}</p>
                     <span className="ls-card__meta">
@@ -101,7 +101,9 @@ function MarketsTab() {
         <div className="ls-list">
             <div className="ls-row-header">
                 <span>Ticker</span>
-                <span style={{ textAlign: `right' }}>Price</span>
+                <span style={{
+                    textAlign: 'right'
+                }}>Price</span>
                 <span style={{ textAlign: 'right' }}>24h</span>
             </div>
             {movers.map((s, i) => {
@@ -139,7 +141,7 @@ function CryptoTab() {
                 setCoins(Array.isArray(cRes.data) ? cRes.data : []);
                 setCnews(Array.isArray(nRes.data) ? nRes.data : []);
             } catch (err) {
-                console.error(`Crypto fetch error:', err.message);
+                console.error('Crypto fetch error:', err.message);
             } finally { setLoading(false); }
         };
         load();
@@ -200,12 +202,12 @@ function PatternsTab() {
     const scan = useCallback(async () => {
         setLoading(true);
         try {
-            const newsRes = await axios.get(`${import.meta.env.VITE_API_URL || "http://localhost:3000"}/api/news/global`);
+            const newsRes = await axios.get(`${import.meta.env.VITE_API_URL || "http://localhost:3000"} / api / news / global`);
             const headlines = (newsRes.data || []).map(n => n.headline).filter(Boolean);
-            const patRes = await axios.post(`${import.meta.env.VITE_API_URL || "http://localhost:3000"}/api/ai/patterns`, { headlines });
+            const patRes = await axios.post(`${import.meta.env.VITE_API_URL || "http://localhost:3000"} / api / ai / patterns`, { headlines });
             setData(patRes.data);
         } catch (err) {
-            console.error(`Pattern scan error:', err.message);
+            console.error('Pattern scan error: ', err.message);
         } finally { setLoading(false); }
     }, []);
 
@@ -301,7 +303,9 @@ function ChatTab() {
                 messages: apiMessages,
             });
 
-            setMessages(prev => [...prev, { role: `assistant', content: data.content }]);
+            setMessages(prev => [...prev, {
+                role: 'assistant', content: data.content
+            }]);
         } catch (err) {
             setMessages(prev => [...prev, {
                 role: 'assistant',
@@ -423,7 +427,7 @@ export default function LeftSidebar() {
                         </button>
                     ))}
                 </div>
-                <div className={`ls-content${active === 'chat' ? ' ls-content--chat' : ''}`}>
+                <div className={`ls-content${active === 'chat' ? ' ls-content--chat' : ''} `}>
                     {active === 'news' && <NewsTab />}
                     {active === 'markets' && <MarketsTab />}
                     {active === 'crypto' && <CryptoTab />}

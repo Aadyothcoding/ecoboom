@@ -91,7 +91,7 @@ function SidebarContent({ exchange, onClose }) {
                     setAi(aiRes.data);
                 }
             } catch (err) {
-                console.error(`Sidebar load error:', err);
+                console.error('Sidebar load error:', err);
             } finally {
                 setLoading(false);
             }

@@ -246,7 +246,7 @@ export default function Globe({ onExchangeSelect, mapMode = '3d' }) {
             try {
                 const [actRes, geoRes] = await Promise.all([
                     axios.get(`${import.meta.env.VITE_API_URL || "http://localhost:3000"}/api/country-activity`),
-                    axios.get(`https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson'),
+                    axios.get('https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson'),
                 ]);
 
                 if (destroyed) return;
@@ -385,7 +385,7 @@ export default function Globe({ onExchangeSelect, mapMode = '3d' }) {
             data.forEach(ev => {
                 addGlowPoint({
                     position: Cesium.Cartesian3.fromDegrees(ev.longitude, ev.latitude, 100000),
-                    color: Cesium.Color.fromCssColorString(`#facc15'),
+                    color: Cesium.Color.fromCssColorString('#facc15'),
                     size: 9,
                     label: '🔥 ' + ev.title,
                 });
@@ -419,7 +419,7 @@ export default function Globe({ onExchangeSelect, mapMode = '3d' }) {
                     const risk = absChg > 3 ? 'CRITICAL' : absChg > 2 ? 'HIGH' : absChg > 1 ? 'MID' : 'LOW';
                     const riskClr = absChg > 3 ? '#ef4444' : absChg > 2 ? '#fb923c' : absChg > 1 ? '#fbbf24' : '#10b981';
                     tooltip.innerHTML = `
-                        <div style="font-weight:800;font-size:14px;color:#f1f5f9;margin-bottom:3px">${d.id}</div>
+                        < div style = "font-weight:800;font-size:14px;color:#f1f5f9;margin-bottom:3px" > ${d.id}</div >
                         <div style="font-size:11px;color:#94a3b8;margin-bottom:4px">${d.index_name} • ${d.country}</div>
                         <div style="display:flex;align-items:center;gap:8px">
                             <span style="font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700">${d.currency || ''}${Number(d.index_value).toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
